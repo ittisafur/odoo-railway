@@ -19,12 +19,8 @@ RUN apt-get -y update && apt-get install -y --no-install-recommends \
 # Install Python packages for OCR
 RUN pip3 install pyocr PyPDF2
 
-# Create custom branding module
-RUN mkdir -p /mnt/extra-addons/custom_branding/views \
-  /mnt/extra-addons/custom_branding/static/src/img
-
-# Copy the custom branding module
-COPY ./addons/custom_branding /mnt/extra-addons/custom_branding/
+# Create addons directory if it doesn't exist
+RUN mkdir -p /mnt/extra-addons
 
 WORKDIR /app
 COPY --chmod=755 entrypoint.sh ./
