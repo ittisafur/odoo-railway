@@ -9,8 +9,14 @@ if [ -z "${ODOO_DATABASE_HOST}" ] || [ -z "${ODOO_DATABASE_PORT}" ]; then
 fi
 
 echo "Waiting for database..."
+RETRIES=30  # Maximum retries before giving up
 while ! nc -z ${ODOO_DATABASE_HOST} ${ODOO_DATABASE_PORT} 2>&1; do 
     echo "Database not available yet... waiting"
+    RETRIES=$((RETRIES-1))
+    if [ $RETRIES -le 0 ]; then
+        echo "Error: Database connection failed after multiple retries. Exiting."
+        exit 1
+    fi
     sleep 1
 done
 echo "Database is now available"
@@ -27,9 +33,13 @@ db_password = ${ODOO_DATABASE_PASSWORD}
 db_name = ${ODOO_DATABASE_NAME}
 proxy_mode = True
 workers = 0  # Single-threaded mode for minimal resource usage
-limit_time_real = 600
-limit_time_cpu = 300
+limit_time_real = 300  # 5 minutes per request
+limit_time_cpu = 150   # 2.5 minutes of CPU time per request
 EOF
+
+# Debugging information
+echo "Generated Odoo configuration:"
+cat /tmp/odoo.conf
 
 # Execute Odoo with all environment variables
 exec odoo \
