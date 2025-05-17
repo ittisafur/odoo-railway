@@ -29,19 +29,6 @@ proxy_mode = True
 workers = 0  # Single-threaded mode for minimal resource usage
 limit_time_real = 600
 limit_time_cpu = 300
-logfile = /var/log/odoo/odoo.log
-EOF
-
-# Set up log rotation
-cat > /etc/logrotate.d/odoo << EOF
-/var/log/odoo/odoo.log {
-    weekly
-    rotate 4
-    compress
-    missingok
-    notifempty
-    create 640 odoo odoo
-}
 EOF
 
 # Execute Odoo with all environment variables
