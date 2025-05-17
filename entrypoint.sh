@@ -41,9 +41,11 @@ EOF
 echo "Generated Odoo configuration:"
 cat /tmp/odoo.conf
 
-# Execute Odoo with all environment variables
+# Initialize the database with the base module
+echo "Initializing database with base module..."
 exec odoo \
     --config=/tmp/odoo.conf \
+    -i base \
     --http-port="${PORT:-8069}" \
     --smtp="${ODOO_SMTP_HOST}" \
     --smtp-port="${ODOO_SMTP_PORT_NUMBER}" \
