@@ -23,6 +23,9 @@ RUN pip3 install pyocr PyPDF2
 # Create addons directory if it doesn't exist
 RUN mkdir -p /mnt/extra-addons
 
+# Fix logrotate permissions
+RUN mkdir -p /etc/logrotate.d && chown odoo:odoo /etc/logrotate.d
+
 WORKDIR /app
 COPY --chmod=755 entrypoint.sh ./
 
