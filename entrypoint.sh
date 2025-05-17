@@ -32,9 +32,9 @@ db_user = ${ODOO_DATABASE_USER}
 db_password = ${ODOO_DATABASE_PASSWORD}
 db_name = ${ODOO_DATABASE_NAME}
 proxy_mode = True
-workers = 0  # Single-threaded mode for minimal resource usage
-limit_time_real = 300  # 5 minutes per request
-limit_time_cpu = 150   # 2.5 minutes of CPU time per request
+workers = 0
+limit_time_real = 300
+limit_time_cpu = 150
 EOF
 
 # Debugging information
